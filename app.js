@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 const Campground = require('./models/campground');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
+const campground = require("./models/campground");
 
 
 mongoose.connect('mongodb://localhost:27017/yelp-camp',{
@@ -42,7 +43,8 @@ app.get('/campgrounds/new', (req,res)=>{
     res.render('campgrounds/new')
 })
 app.post('/campgrounds', async(req,res)=>{
-    const campground = new Campground(req.body.campground);
+    console.log(req.body);
+    const campground = new Campground(req.body[campground]);   
     await campground.save();
     res.redirect(`/campgrounds/${campground._id}`)
 })
