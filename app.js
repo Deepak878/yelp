@@ -28,7 +28,7 @@ app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method')); 
 
 app.get('/', (req,res)=>{
-    res.render('home')
+    res.redirect('/campgrounds')
 })
 app.get('/makecampground', async(req,res)=>{
    const camp = new Campground({title: 'My Backyard', description: 'cheap camping'});
