@@ -5,11 +5,13 @@ const session = require('express-session');
 const ejsMate = require('ejs-mate');
 const methodOverride = require('method-override');
 const ExpressError = require('./utils/ExpressError')
-const falsh = require('connect-flash');
-
-const campgrounds = require('./routes/campgrounds');
-const reviews = require('./routes/reviews');
+const passport = require('passport');
+const userRoutes = require('./routes/users');
+const LocalStratergy = require('passport-local');
+const campgroundRoutes = require('./routes/campgrounds');
+const reviewRoutes = require('./routes/reviews');
 const flash = require("connect-flash/lib/flash");
+const User = require('./models/user')
 mongoose.connect('mongodb://localhost:27017/yelp-camp',{
     useNewUrlParser:true,
   useUnifiedTopology:true,
@@ -44,14 +46,27 @@ const sessionConfig = {
 }
 app.use(session(sessionConfig))
 app.use(flash());
-app.use( (req,res,next)=>{
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStratergy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
+app.use((req,res,next)=>{
  res.locals.success = req.flash('success');
  res.locals.error = req.flash('error');
  next();
 })
+app.get('/fakeUser', async(req,res)=>{
+    const user = new User({email: 'deepak@gmail.com', username:'deepak123'})
+  const newUser = await User.register(user , 'deepak123')
+   res.send(newUser);
 
-app.use('/campgrounds',campgrounds);
-app.use('/campgrounds/:id/reviews', reviews)
+})
+app.use('/',userRoutes);
+app.use('/campgrounds',campgroundRoutes);
+app.use('/campgrounds/:id/reviews', reviewRoutes)
 app.get('/', (req,res)=>{
     res.redirect('/campgrounds')
 })
