@@ -11,16 +11,16 @@ const cloudinary = require('cloudinary').v2;
 
 router.route('/')
 .get(catchAsync(campgrounds.index))
-// .post(isLoggedIn, validateCampground, catchAsync(campgrounds.createCampground))
-.post(upload.array('image'), (req,res)=>{
-    console.log(req.body , req.files)
-    res.send('It worked' );
-})
+.post(isLoggedIn,upload.array('image'), validateCampground, catchAsync(campgrounds.createCampground))
+// .post(upload.array('image'), (req,res)=>{
+//     console.log(req.body , req.files)
+//     res.send('It worked' );
+// })
 
 router.get('/new',isLoggedIn,campgrounds.renderForm)
 router.route('/:id')
 .get(catchAsync(campgrounds.showCampground))
-.put(isLoggedIn,validateCampground,catchAsync(campgrounds.updateCampground))
+.put(isLoggedIn,isAuthor,upload.array('image') ,validateCampground,catchAsync(campgrounds.updateCampground))
 .delete(isLoggedIn, catchAsync(campgrounds.deleteCampground))
 
 
