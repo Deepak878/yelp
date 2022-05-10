@@ -16,7 +16,15 @@
           >View <%= campground.title %></a
         >
       </div>
+      <% if(campground.images.length){ %>
       <img class="img-fluid" alt="" src="<%=campground.images[0].url%>" />
+      <% } else{%>
+      <img
+        class="img-fluid"
+        alt=""
+        src="https://res.cloudinary.com/deepak878/image/upload/v1652167275/YelpCamp/qoejvkl4kpnysidgspdx.png"
+      />
+      <% }%>
     </div>
   </div>
 </div>

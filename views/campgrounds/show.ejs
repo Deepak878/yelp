@@ -1,7 +1,10 @@
 <% layout('layouts/boilerplate') %>
 <link rel="stylesheet" href="/stylesheets/stars.css" />
+
 <div class="row">
   <div class="col-6 mb-3">
+    <div id="map" style="width: 400px; height: 300px"></div>
+
     <div
       id="carouselExampleControls"
       class="carousel slide"
@@ -42,6 +45,7 @@
       </button>
       <% } %>
     </div>
+
     <div class="card mb-3">
       <div class="card-body">
         <h5 class="card-title"><%= campground.title %></h5>
@@ -134,3 +138,9 @@
   </div>
   <button class="btn btn-success">Submit</button>
 </form> -->
+<script>
+  const mapToken = "<%-process.env.MAPBOX_TOKEN %>"
+  const campground = <%- JSON.stringify(campground) %>
+  // const campground = <%- JSON.stringify(campground) %>,
+</script>
+<script src="/javascripts/showPageMap.js"></script>
