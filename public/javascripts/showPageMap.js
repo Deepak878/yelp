@@ -1,16 +1,18 @@
-const campground = require("../../models/campground");
+// const campground = require("../../models/campground");
+
 
 
   mapboxgl.accessToken = mapToken;
   const map = new mapboxgl.Map({
-    container: "map", // container ID
-    style: "mapbox://styles/mapbox/streets-v11", // style URL
-    center: campground.geometry.coordinates, // starting position [lng, lat]
-    zoom: 8, // starting zoom
+    container: "map",
+    style: "mapbox://styles/mapbox/streets-v11",
+    center: campground.geometry.coordinates,
+    zoom: 8,
   });
 
+
   new mapboxgl.Marker()
-  .setLngLat([campground.geometry.coordinates])
+  .setLngLat(campground.geometry.coordinates)
   .setPopup(
     new mapboxgl.Popup({ offset:25 })
     .setHTML(
