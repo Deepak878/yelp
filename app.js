@@ -77,13 +77,13 @@ app.use('/',userRoutes);
 app.use('/campgrounds',campgroundRoutes);
 app.use('/campgrounds/:id/reviews', reviewRoutes)
 app.get('/', (req,res)=>{
-    res.redirect('/campgrounds')
+    res.render('home')
 })
-app.get('/makecampground', async(req,res)=>{
-    const camp = new Campground({title: 'My Backyard', description: 'cheap camping'});
-    await camp.save();
-     res.send(camp)
- })
+// app.get('/makecampground', async(req,res)=>{
+//     const camp = new Campground({title: 'My Backyard', description: 'cheap camping'});
+//     await camp.save();
+//      res.send(camp)
+//  })
 
  app.all('*',(req,res,next)=>{
 next(new ExpressError('Page not found',404))
